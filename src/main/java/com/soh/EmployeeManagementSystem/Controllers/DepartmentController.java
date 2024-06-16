@@ -1,5 +1,6 @@
 package com.soh.EmployeeManagementSystem.Controllers;
 
+import com.soh.EmployeeManagementSystem.DTOs.DepartmentDTO;
 import com.soh.EmployeeManagementSystem.Models.Department;
 import com.soh.EmployeeManagementSystem.Repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,14 @@ public class DepartmentController {
     }
 
     @PostMapping("/department")
-    public Department createDepartment(@RequestBody Department department) {
+    public Department createDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        Department department = new Department();
+        department.setName(departmentDTO.getName());
         return departmentRepository.save(department);
     }
 
     @PutMapping("/department/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable long id, @RequestBody Department departmentUpdates) {
+    public ResponseEntity<Department> updateDepartment(@PathVariable long id, @RequestBody DepartmentDTO departmentUpdates) {
         Optional<Department> department = departmentRepository.findById(id);
         if (department.isPresent()) {
             Department existingDepartment = department.get();
