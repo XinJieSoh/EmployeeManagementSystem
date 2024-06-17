@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
 public class ProjectController {
     @Autowired
     private ProjectRepository projectRepository;
