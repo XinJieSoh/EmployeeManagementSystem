@@ -1,3 +1,6 @@
+API Documentation: http://localhost:8080/swagger-ui/index.html
+Database Design (ERD): https://drive.google.com/file/d/114VEl_hz1amBnZq-6LDhaTwckMhYcd1R/view?usp=drive_link
+
 Project Setup:
 
 Pre-requisite:
@@ -11,4 +14,4 @@ Steps:
 4. Create schema name employeemanagement.
 5. Open the project in intellij as maven.
 6. mvn clean install.
-7. spring-boot:run.
+7. spring-boot:run. (The tables will be auto-created at MySQL Workbench).
