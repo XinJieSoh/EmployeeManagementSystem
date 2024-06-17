@@ -1,12 +1,21 @@
-package com.soh.EmployeeManagementSystem.DTOs;
+package com.soh.EmployeeManagementSystem.Models;
 
 import java.util.Set;
 
-public class EmployeeDTO {
+public class EmployeeResponse {
+    private Long id;
     private String name;
     private String position;
     private Long departmentId;
-    private Set<Long> projectIds;
+    private Set<Project> projects;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -32,11 +41,12 @@ public class EmployeeDTO {
         this.departmentId = departmentId;
     }
 
-    public Set<Long> getProjectIds() {
-        return projectIds;
+    public Set<Project> getProjects() {
+        return projects;
     }
 
-    public void setProjectIds(Set<Long> projectIds) {
-        this.projectIds = projectIds;
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
     }
+
 }

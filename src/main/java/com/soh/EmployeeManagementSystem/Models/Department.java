@@ -7,17 +7,17 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id_department;
+    private long departmentId;
 
     @Column
     private String name;
 
-    public long getId_department() {
-        return id_department;
+    public long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setId_department(long id_department) {
-        this.id_department = id_department;
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getName() {
