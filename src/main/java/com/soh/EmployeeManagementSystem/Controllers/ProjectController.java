@@ -3,7 +3,7 @@ package com.soh.EmployeeManagementSystem.Controllers;
 import com.soh.EmployeeManagementSystem.DTOs.ProjectDTO;
 import com.soh.EmployeeManagementSystem.Models.Employee;
 import com.soh.EmployeeManagementSystem.Models.Project;
-import com.soh.EmployeeManagementSystem.Models.ProjectResponse;
+import com.soh.EmployeeManagementSystem.DTOs.ProjectResponse;
 import com.soh.EmployeeManagementSystem.Repositories.EmployeeRepository;
 import com.soh.EmployeeManagementSystem.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ProjectController {
 
     private ProjectResponse convertToResponse(Project project) {
         ProjectResponse response = new ProjectResponse();
-        response.setId(project.getId());
+        response.setId(project.getProjectId());
         response.setName(project.getName());
         response.setEmployees(project.getEmployees());
         return response;

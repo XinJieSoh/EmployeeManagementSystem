@@ -3,7 +3,7 @@ package com.soh.EmployeeManagementSystem.Controllers;
 import com.soh.EmployeeManagementSystem.DTOs.EmployeeDTO;
 import com.soh.EmployeeManagementSystem.Models.Department;
 import com.soh.EmployeeManagementSystem.Models.Employee;
-import com.soh.EmployeeManagementSystem.Models.EmployeeResponse;
+import com.soh.EmployeeManagementSystem.DTOs.EmployeeResponse;
 import com.soh.EmployeeManagementSystem.Models.Project;
 import com.soh.EmployeeManagementSystem.Repositories.DepartmentRepository;
 import com.soh.EmployeeManagementSystem.Repositories.EmployeeRepository;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class EmployeeController {
 
     private EmployeeResponse convertToResponse(Employee employee) {
         EmployeeResponse response = new EmployeeResponse();
-        response.setId(employee.getId());
+        response.setId(employee.getEmployeeId());
         response.setName(employee.getName());
         response.setPosition(employee.getPosition());
         response.setDepartmentId(employee.getDepartment().getDepartmentId());
@@ -94,7 +95,14 @@ public class EmployeeController {
                         .collect(Collectors.toSet());
 
                 Set<Project> currentProjects = existingEmployee.getProjects();
-                currentProjects.forEach(existingEmployee::removeProject);
+                // Collect projects to be removed to avoid ConcurrentModificationException
+                Set<Project> projectsToRemove = new HashSet<>(existingEmployee.getProjects());
+                // Remove the employee from each project
+                for (Project project : projectsToRemove) {
+                    project.removeEmployee(existingEmployee);
+                }
+                // Clear the projects from the employees
+                existingEmployee.getProjects().clear();
                 newProjects.forEach(existingEmployee::addProject);
             }
 
@@ -110,7 +118,18 @@ public class EmployeeController {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isPresent()) {
             Employee existingEmployee = employee.get();
-            existingEmployee.getProjects().forEach(project -> project.removeEmployee(existingEmployee));
+
+            // Collect projects to be removed to avoid ConcurrentModificationException
+            Set<Project> projectsToRemove = new HashSet<>(existingEmployee.getProjects());
+
+            // Remove the employee from each project
+            for (Project project : projectsToRemove) {
+                project.removeEmployee(existingEmployee);
+            }
+
+            // Clear the projects from the employees
+            existingEmployee.getProjects().clear();
+
             employeeRepository.delete(existingEmployee);
             return ResponseEntity.noContent().build();
         } else {

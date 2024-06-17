@@ -10,7 +10,7 @@ import java.util.Set;
 public class Employee {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id;
+    private long employeeId;
 
     @Column
     private String name;
@@ -36,12 +36,12 @@ public class Employee {
         project.getEmployees().remove(this);
     }
 
-    public long getId() {
-        return id;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getName() {

@@ -1,4 +1,6 @@
-package com.soh.EmployeeManagementSystem.Models;
+package com.soh.EmployeeManagementSystem.DTOs;
+
+import com.soh.EmployeeManagementSystem.Models.Project;
 
 import java.util.Set;
 
